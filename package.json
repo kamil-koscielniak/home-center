@@ -1,0 +1,33 @@
+{
+  "name": "home-center",
+  "directories": {
+    "doc": "docs",
+    "test": "tests"
+  },
+  "dependencies": {
+    "shards-dashboard": "git+https://git@github.com/DesignRevision/shards-dashboard.git"
+  },
+  "devDependencies": {
+    "@symfony/webpack-encore": "^0.20.0",
+    "jest": "^23.6.0",
+    "jquery": "^3.3.1",
+    "webpack-notifier": "^1.6.0"
+  },
+  "scripts": {
+    "build": "encore production",
+    "test": "jest",
+    "dev-server": "encore dev-server",
+    "dev": "encore dev",
+    "watch": "encore dev --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kamil-koscielniak/home-center.git"
+  },
+  "author": "Kamil Kościelniak",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kamil-koscielniak/home-center/issues"
+  },
+  "homepage": "https://github.com/kamil-koscielniak/home-center#readme"
+}
