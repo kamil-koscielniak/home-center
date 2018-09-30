@@ -1,0 +1,9 @@
+li.user-menu{
+    min-width: 13em;
+}
+.empty-avatar{
+    vertical-align: middle;
+}
+.nav-link .empty-avatar{
+    font-size: 40px;
+}
