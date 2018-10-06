@@ -1,0 +1,6 @@
+{% for message in app.flashes('success') %}
+    {% include '_template/flash/skeleton.html.twig' with {'message': message, 'class': 'success'} %}
+{% endfor %}
+{% for message in app.flashes('notice') %}
+    {% include '_template/flash/skeleton.html.twig' with {'message': message, 'class': 'accent'} %}
+{% endfor %}

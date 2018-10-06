@@ -39,10 +39,12 @@ class UserMakeCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $roles = empty($input->getOption('role')) ? [] : [$input->getOption('role')];
+
         $this->userManager->create(
             $input->getArgument('username'),
             $input->getArgument('password'),
-            [$input->getOption('role')]
+            $roles
         );
 
         $output->writeln('Success! User has been added!');

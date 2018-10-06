@@ -1,13 +1,13 @@
 <a class="nav-link dropdown-toggle text-nowrap px-3" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
     {% if isAvatarExists(app.user.id) %}
-        <img class="user-avatar rounded-circle mr-2" src="{{ getAvatar(app.user.id) }}" alt="Avatar">
+        <img class="user-avatar rounded-circle mr-2" src="/{{ getAvatar(app.user.id) }}" alt="Avatar">
     {% else %}
         <i class="user-avatar empty-avatar rounded-circle mr-2 fa fa-user-circle"></i>
     {% endif %}
     <span class="d-none d-md-inline-block">{{ app.user.username }}</span>
 </a>
 <div class="dropdown-menu dropdown-menu-small">
-    <a class="dropdown-item" href="user-profile-lite.html">
+    <a class="dropdown-item" href="{{ url('user_profile') }}">
         <i class="material-icons">&#xE7FD;</i> Profil</a>
     <div class="dropdown-divider"></div>
     <a class="dropdown-item text-danger" href="{{ url('logout') }}">

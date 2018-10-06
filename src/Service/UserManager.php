@@ -8,7 +8,6 @@
 
 namespace App\Service;
 
-
 use App\Controller\UserController;
 use App\Entity\User;
 use App\Repository\UserRepository;
@@ -22,7 +21,6 @@ class UserManager
 
     public function __construct(UserController $userController)
     {
-
         $this->userController = $userController;
     }
 
@@ -40,5 +38,4 @@ class UserManager
     {
         return $this->userController->delete($user);
     }
-
 }
