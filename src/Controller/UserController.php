@@ -178,7 +178,7 @@ class UserController extends AbstractController
         if (self::isAvatarExists($userID)) {
             $avatar = self::AVATAR_PATH . self::createAvatarName($userID);
         } else {
-            $avatar = self::AVATAR_PATH . self::AVATAR_DEFAULT;
+            $avatar = 'build/' . self::AVATAR_PATH . self::AVATAR_DEFAULT;
         }
         
         return $avatar;
