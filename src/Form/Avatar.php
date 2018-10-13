@@ -8,18 +8,16 @@
 
 namespace App\Form;
 
+use App\Form\Type\AvatarType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\FormBuilderInterface;
 
-class PasswordResetType extends AbstractType
+class Avatar extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('oldPassword', PasswordType::class)
-            ->add('newPassword', PasswordType::class)
-            ->add('repeatedNewPassword', PasswordType::class)
+            ->add('avatar', AvatarType::class)
         ;
     }
 }

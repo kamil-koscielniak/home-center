@@ -1,9 +1,7 @@
 <a class="nav-link dropdown-toggle text-nowrap px-3" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-    {% if isAvatarExists(app.user.id) %}
-        <img class="user-avatar rounded-circle mr-2" src="/{{ getAvatar(app.user.id) }}" alt="Avatar">
-    {% else %}
-        <i class="user-avatar empty-avatar rounded-circle mr-2 fa fa-user-circle"></i>
-    {% endif %}
+    <div class="avatar-preview small-avatar">
+        <div class="avatar" style="background-image: url('/{{ getAvatar(app.user.id) }}')"></div>
+    </div>
     <span class="d-none d-md-inline-block">{{ app.user.username }}</span>
 </a>
 <div class="dropdown-menu dropdown-menu-small">

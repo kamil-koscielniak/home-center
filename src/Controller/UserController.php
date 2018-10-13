@@ -3,15 +3,20 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Form\Avatar;
 use App\Form\Model\ChangePassword;
-use App\Form\PasswordResetType;
+use App\Form\PasswordReset;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class UserController extends AbstractController
 {
+    const AVATAR_PATH = 'images/avatars/';
+    const AVATAR_NAME_PREFIX = 'avt';
+    const AVATAR_DEFAULT = 'avt-default.png';
 
     /** @var UserPasswordEncoderInterface */
     private $encoder;
@@ -32,6 +37,15 @@ class UserController extends AbstractController
     }
 
     /**
+     * @return User[]|object[]
+     */
+    public function list()
+    {
+        $rep = $this->getDoctrine()->getRepository(User::class);
+        return $rep->findAll();
+    }
+
+    /**
      * @param array $args
      * @return User|null|object
      */
@@ -48,7 +62,7 @@ class UserController extends AbstractController
      */
     public function create($username, $password, $roles = [])
     {
-        if (empty($roles)){
+        if (empty($roles)) {
             $roles[] = 'ROLE_USER';
         }
 
@@ -81,8 +95,10 @@ class UserController extends AbstractController
     public function profile(Request $request)
     {
         $changePasswordModel = new ChangePassword();
-        $formChangePassword = $this->createForm(PasswordResetType::class, $changePasswordModel);
+        $formChangePassword = $this->createForm(PasswordReset::class, $changePasswordModel);
+        $formChangeAvatar = $this->createForm(Avatar::class);
         $formChangePassword->handleRequest($request);
+        $formChangeAvatar->handleRequest($request);
 
         if ($formChangePassword->isSubmitted() && $formChangePassword->isValid()) {
             $data = $formChangePassword->getData();
@@ -94,8 +110,34 @@ class UserController extends AbstractController
             );
         }
 
+        if ($formChangeAvatar->isSubmitted() && $formChangeAvatar->isValid()) {
+            $data = $formChangeAvatar->getData();
+            /** @var UploadedFile $file */
+            $file = $data['avatar'];
+
+            if (!empty($file)){
+                try {
+                    $file->move(
+                        self::AVATAR_PATH,
+                        self::createAvatarName($this->getUser()->getId())
+                    );
+                } catch (FileException $e) {
+                    $this->addFlash(
+                        'error',
+                        'Wystąpiły problemy!'
+                    );
+                }
+
+                $this->addFlash(
+                    'success',
+                    'Avatar został zmieniony!'
+                );
+            }
+        }
+
         return $this->render('user/profile.html.twig', [
-            'form' => $formChangePassword->createView()
+            'formChangePassword' => $formChangePassword->createView(),
+            'formChangeAvatar' => $formChangeAvatar->createView(),
         ]);
     }
 
@@ -116,5 +158,38 @@ class UserController extends AbstractController
         $user->setPassword($this->encoder->encodePassword($user, $newPassword));
         $entityManager->persist($user);
         $entityManager->flush();
+    }
+
+    /**
+     * @param string $userID
+     * @return bool
+     */
+    public static function isAvatarExists(string $userID): bool
+    {
+        return file_exists(self::AVATAR_PATH . self::createAvatarName($userID));
+    }
+
+    /**
+     * @param string $userID
+     * @return string
+     */
+    public static function getAvatarFile(string $userID): string
+    {
+        if (self::isAvatarExists($userID)) {
+            $avatar = self::AVATAR_PATH . self::createAvatarName($userID);
+        } else {
+            $avatar = self::AVATAR_PATH . self::AVATAR_DEFAULT;
+        }
+        
+        return $avatar;
+    }
+
+    /**
+     * @param int $userID
+     * @return string
+     */
+    public static function createAvatarName(int $userID): string
+    {
+        return self::AVATAR_NAME_PREFIX . $userID.'.jpg';
     }
 }

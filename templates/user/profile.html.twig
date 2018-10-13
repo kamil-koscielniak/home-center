@@ -11,37 +11,37 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-lg-4 text-center">
-                            <form>
-                                <div class="mb-2 mx-auto">
-                                    {% if isAvatarExists(app.user.id) %}
-                                        <img class="user-avatar rounded-circle mr-2" src="/{{ getAvatar(app.user.id) }}"
-                                             alt="Avatar">
-                                    {% else %}
-                                        <i class="user-avatar empty-avatar rounded-circle mr-2 fa fa-user-circle"></i>
-                                    {% endif %}
+                            {{ form_start(formChangeAvatar) }}
+                                <div class="avatar-upload">
+                                    <div class="avatar-edit">
+                                        {{ form_widget(formChangeAvatar.avatar) }}
+                                    </div>
+                                    <div class="avatar-preview">
+                                        <div class="avatar" style="background-image: url('/{{ getAvatar(app.user.id) }}')"></div>
+                                    </div>
                                 </div>
                                 <h4 class="mb-2">{{ app.user.username }}</h4>
                                 <button class="btn btn-success"><i class="fa fa-user-circle"></i> Zapisz avatar</button>
-                            </form>
+                            {{ form_end(formChangeAvatar) }}
                         </div>
                         <div class="col-lg-8">
                             <div class="pl-3">
                                 <strong class="text-muted d-block mb-1">Zmiana hasła</strong>
-                                {{ form_start(form) }}
+                                {{ form_start(formChangePassword) }}
                                     <div class="form-group">
-                                        {{ form_widget(form.oldPassword, {attr: {placeholder: 'Stare hasło'}}) }}
-                                        {{ form_errors(form.oldPassword) }}
+                                        {{ form_widget(formChangePassword.oldPassword, {attr: {placeholder: 'Stare hasło'}}) }}
+                                        {{ form_errors(formChangePassword.oldPassword) }}
                                     </div>
                                     <div class="form-group">
-                                        {{ form_widget(form.newPassword, {attr: {placeholder: 'Nowe hasło'}}) }}
-                                        {{ form_errors(form.newPassword) }}
+                                        {{ form_widget(formChangePassword.newPassword, {attr: {placeholder: 'Nowe hasło'}}) }}
+                                        {{ form_errors(formChangePassword.newPassword) }}
                                     </div>
                                     <div class="form-group">
-                                        {{ form_widget(form.repeatedNewPassword, {attr: {placeholder: 'Powtórz nowe hasło'}}) }}
-                                        {{ form_errors(form.repeatedNewPassword) }}
+                                        {{ form_widget(formChangePassword.repeatedNewPassword, {attr: {placeholder: 'Powtórz nowe hasło'}}) }}
+                                        {{ form_errors(formChangePassword.repeatedNewPassword) }}
                                     </div>
                                     <button class="btn btn-primary"><i class="fa fa-key"></i> Zapisz nowe hasło</button>
-                                {{ form_end(form) }}
+                                {{ form_end(formChangePassword) }}
                             </div>
                         </div>
                     </div>
