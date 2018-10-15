@@ -1,4 +1,5 @@
 var Encore = require('@symfony/webpack-encore');
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 
 Encore
     // directory where compiled assets will be stored
@@ -27,6 +28,10 @@ Encore
         './node_modules/shards-dashboard/styles/shards-dashboards.1.1.0.min.css')
     .addStyleEntry('template/styles/extras.1.1.0.min',
         './node_modules/shards-dashboard/styles/extras.1.1.0.min.css')
+
+    .addPlugin(new CopyWebpackPlugin([
+        {from: './assets/images', to: 'images'}
+    ]))
 
     /*
      * FEATURE CONFIG

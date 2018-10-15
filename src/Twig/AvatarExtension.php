@@ -8,13 +8,12 @@
 
 namespace App\Twig;
 
+use App\Controller\UserController;
 use Twig\Extension\AbstractExtension;
 use Twig_Function;
 
 class AvatarExtension extends AbstractExtension
 {
-    const AVATAR_PATH = 'images/avatars/';
-    const AVATAR_NAME_PREFIX = 'avt';
 
     public function getFunctions()
     {
@@ -26,16 +25,11 @@ class AvatarExtension extends AbstractExtension
 
     public function isAvatarExists(string $userID): bool
     {
-        return file_exists($this->getAvatarName($userID));
+        return UserController::isAvatarExists($userID);
     }
 
     public function getAvatar(string $userID): string
     {
-        return $this->getAvatarName($userID);
-    }
-
-    private function getAvatarName(string $userID): string
-    {
-        return self::AVATAR_PATH . self::AVATAR_NAME_PREFIX . $userID.'.jpg';
+        return UserController::getAvatarFile($userID);
     }
 }

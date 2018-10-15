@@ -2,6 +2,7 @@
 
 namespace App\Command;
 
+use App\Controller\UserController;
 use App\Service\UserManager;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -14,14 +15,14 @@ class UserDeleteCommand extends Command
 {
     protected static $defaultName = 'user:delete';
     /**
-     * @var UserManager
+     * @var UserController
      */
-    private $userManager;
+    private $userController;
 
-    public function __construct(?string $name = null, UserManager $userManager)
+    public function __construct(?string $name = null, UserController $userController)
     {
         parent::__construct($name);
-        $this->userManager = $userManager;
+        $this->userController = $userController;
     }
 
     protected function configure()
@@ -33,9 +34,9 @@ class UserDeleteCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $user = $this->userManager->findBy(['username' => $input->getArgument('username')]);
+        $user = $this->userController->findBy(['username' => $input->getArgument('username')]);
         if (!is_null($user)){
-            $this->userManager->delete($user);
+            $this->userController->delete($user);
             $output->writeln('Success! User has been deleted!');
         }
         else{

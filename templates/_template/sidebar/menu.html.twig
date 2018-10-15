@@ -1,11 +1,13 @@
 <li class="nav-item">
-    <a class="nav-link active" href="{{ url('dashboard') }}">
+    <a class="nav-link {{ app.request.get('_route') == 'dashboard' ? 'active' : '' }}"
+       href="{{ url('dashboard') }}">
         <i class="material-icons">dashboard</i>
         <span>Dashboard</span>
     </a>
 </li>
 <li class="nav-item">
-    <a class="nav-link " href="user-profile-lite.html">
+    <a class="nav-link {{ app.request.get('_route') == 'user_profile' ? 'active' : '' }}"
+       href="{{ url('user_profile') }}">
         <i class="material-icons">person</i>
         <span>Profil</span>
     </a>

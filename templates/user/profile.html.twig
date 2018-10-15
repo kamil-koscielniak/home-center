@@ -1,0 +1,53 @@
+{% extends '_template/main.html.twig' %}
+
+{% block header %}Profil{% endblock %}
+{% block title %}Profil użytkownika{% endblock %}
+
+{% block content %}
+
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="card card-small mb-4 pt-3">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-4 text-center">
+                            {{ form_start(formChangeAvatar) }}
+                                <div class="avatar-upload">
+                                    <div class="avatar-edit">
+                                        {{ form_widget(formChangeAvatar.avatar) }}
+                                    </div>
+                                    <div class="avatar-preview">
+                                        <div class="avatar" style="background-image: url('/{{ getAvatar(app.user.id) }}')"></div>
+                                    </div>
+                                </div>
+                                <h4 class="mb-2">{{ app.user.username }}</h4>
+                                <button class="btn btn-success"><i class="fa fa-user-circle"></i> Zapisz avatar</button>
+                            {{ form_end(formChangeAvatar) }}
+                        </div>
+                        <div class="col-lg-8">
+                            <div class="pl-3">
+                                <strong class="text-muted d-block mb-1">Zmiana hasła</strong>
+                                {{ form_start(formChangePassword) }}
+                                    <div class="form-group">
+                                        {{ form_widget(formChangePassword.oldPassword, {attr: {placeholder: 'Stare hasło'}}) }}
+                                        {{ form_errors(formChangePassword.oldPassword) }}
+                                    </div>
+                                    <div class="form-group">
+                                        {{ form_widget(formChangePassword.newPassword, {attr: {placeholder: 'Nowe hasło'}}) }}
+                                        {{ form_errors(formChangePassword.newPassword) }}
+                                    </div>
+                                    <div class="form-group">
+                                        {{ form_widget(formChangePassword.repeatedNewPassword, {attr: {placeholder: 'Powtórz nowe hasło'}}) }}
+                                        {{ form_errors(formChangePassword.repeatedNewPassword) }}
+                                    </div>
+                                    <button class="btn btn-primary"><i class="fa fa-key"></i> Zapisz nowe hasło</button>
+                                {{ form_end(formChangePassword) }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

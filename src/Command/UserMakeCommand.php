@@ -2,6 +2,7 @@
 
 namespace App\Command;
 
+use App\Controller\UserController;
 use App\Entity\User;
 use App\Repository\UserRepository;
 use App\Service\UserManager;
@@ -16,14 +17,14 @@ class UserMakeCommand extends Command
 {
     protected static $defaultName = 'user:make';
     /**
-     * @var UserManager
+     * @var UserController
      */
-    private $userManager;
+    private $userController;
 
-    public function __construct(?string $name = null, UserManager $userManager)
+    public function __construct(?string $name = null, UserController $userController)
     {
         parent::__construct($name);
-        $this->userManager = $userManager;
+        $this->userController = $userController;
     }
 
     protected function configure()
@@ -39,10 +40,12 @@ class UserMakeCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->userManager->create(
+        $roles = empty($input->getOption('role')) ? [] : [$input->getOption('role')];
+
+        $this->userController->create(
             $input->getArgument('username'),
             $input->getArgument('password'),
-            [$input->getOption('role')]
+            $roles
         );
 
         $output->writeln('Success! User has been added!');
