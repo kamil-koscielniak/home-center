@@ -21,9 +21,7 @@
                                 </a>
                             </div>
                             <div class="col-lg-4 col-md-4 col-sm-4 col-4 text-right">
-                                <button class="btn btn-outline-danger btn-sm">
-                                    <i class="fa fa-trash"></i>
-                                </button>
+                                {% include('shopping_list/_delete_form.html.twig') %}
                             </div>
                         </div>
 
@@ -36,12 +34,33 @@
                                 przez {{ app.user.username }}</a>
                         </div>
                     </div>
-                    <div class="card-body">
+                    <div class="card-body" style="min-height: 128px;">
                         <div class="text-muted mb-2 text-right">{{ shopping_list.createdAt.format('d F Y') }}</div>
 
-                        <p></p>
-                        {#<p class="card-text d-inline-block mb-3">However venture pursuit he am mr cordial. Forming#}
-                            {#musical am hearing studied be luckily. But in for determine what would see...</p>#}
+                        {% for item in shopping_list.shoppingItems|slice(0, 3) %}
+                            <div class="row mb-1">
+                                <div class="col-2">
+                                    {% if item.picker != null %}
+                                        <i class="fa fa-check"></i>
+                                    {% else %}
+                                        <i class="fa fa-dot-circle"></i>
+                                    {% endif %}
+                                </div>
+                                <div class="col-10">
+                                    {{ item.description }}
+                                </div>
+                            </div>
+                        {% else %}
+                            <div class="row text-center">
+                                <div class="col-12">
+                                    <div class="mt-2">Pusta lista</div>
+                                    <div class="mt-2">
+                                        <button class="btn btn-sm btn-success">
+                                            <i class="fa fa-plus"></i> Dodaj element</button>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
                     </div>
                 </div>
             </div>
