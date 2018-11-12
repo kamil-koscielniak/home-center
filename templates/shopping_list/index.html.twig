@@ -1,0 +1,53 @@
+{% extends '_template/main.html.twig' %}
+
+{% block header %}Zakupy{% endblock %}
+{% block title %}Listy zakupów{% endblock %}
+
+{% block content %}
+
+    <a href="{{ path('shopping_list_new') }}" class="btn btn-success btn-lg mb-4">
+        <i class="fa fa-plus-circle"></i> Utwórz listę
+    </a>
+
+    <div class="row">
+        {% for shopping_list in shopping_lists %}
+            <div class="col-lg-3 col-md-6 col-sm-12 mb-4">
+                <div class="card card-small">
+                    <div class="card-header border-bottom bg-light">
+                        <div class="row">
+                            <div class="col-lg-8 col-md-8 col-sm-8 col-8">
+                                <a href="{{ path('shopping_list_edit', {'id': shopping_list.id}) }}">
+                                    <h6>{{ shopping_list.name }}</h6>
+                                </a>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-4 text-right">
+                                <button class="btn btn-outline-danger btn-sm">
+                                    <i class="fa fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="card-author-container">
+                        <div class="card-author d-flex">
+                            <a href="{{ path('shopping_list_edit', {'id': shopping_list.id}) }}"
+                               class="card-post__author-avatar card-post__author-avatar--small"
+                               style="background-image: url('/{{ getAvatar(shopping_list.user.id) }}');">Utworzone
+                                przez {{ app.user.username }}</a>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="text-muted mb-2 text-right">{{ shopping_list.createdAt.format('d F Y') }}</div>
+
+                        <p></p>
+                        {#<p class="card-text d-inline-block mb-3">However venture pursuit he am mr cordial. Forming#}
+                            {#musical am hearing studied be luckily. But in for determine what would see...</p>#}
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <div>no records found</div>
+        {% endfor %}
+
+    </div>
+{% endblock %}

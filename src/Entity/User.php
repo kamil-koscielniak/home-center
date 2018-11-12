@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
@@ -43,6 +45,22 @@ class User implements UserInterface
      * @ORM\Column(type="boolean")
      */
     private $isActive = true;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\ShoppingList", mappedBy="user", orphanRemoval=true)
+     */
+    private $shoppingLists;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\ShoppingItem", mappedBy="creator")
+     */
+    private $shoppingItems;
+
+    public function __construct()
+    {
+        $this->shoppingLists = new ArrayCollection();
+        $this->shoppingItems = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -131,5 +149,67 @@ class User implements UserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    /**
+     * @return Collection|ShoppingList[]
+     */
+    public function getShoppingLists(): Collection
+    {
+        return $this->shoppingLists;
+    }
+
+    public function addShoppingList(ShoppingList $shoppingList): self
+    {
+        if (!$this->shoppingLists->contains($shoppingList)) {
+            $this->shoppingLists[] = $shoppingList;
+            $shoppingList->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeShoppingList(ShoppingList $shoppingList): self
+    {
+        if ($this->shoppingLists->contains($shoppingList)) {
+            $this->shoppingLists->removeElement($shoppingList);
+            // set the owning side to null (unless already changed)
+            if ($shoppingList->getUser() === $this) {
+                $shoppingList->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ShoppingItem[]
+     */
+    public function getShoppingItems(): Collection
+    {
+        return $this->shoppingItems;
+    }
+
+    public function addShoppingItem(ShoppingItem $shoppingItem): self
+    {
+        if (!$this->shoppingItems->contains($shoppingItem)) {
+            $this->shoppingItems[] = $shoppingItem;
+            $shoppingItem->setCreator($this);
+        }
+
+        return $this;
+    }
+
+    public function removeShoppingItem(ShoppingItem $shoppingItem): self
+    {
+        if ($this->shoppingItems->contains($shoppingItem)) {
+            $this->shoppingItems->removeElement($shoppingItem);
+            // set the owning side to null (unless already changed)
+            if ($shoppingItem->getCreator() === $this) {
+                $shoppingItem->setCreator(null);
+            }
+        }
+
+        return $this;
     }
 }

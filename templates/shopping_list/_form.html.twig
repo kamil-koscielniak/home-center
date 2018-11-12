@@ -1,0 +1,23 @@
+
+<div class="row">
+    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+        {{ form_start(form) }}
+        <div class="card">
+            <div class="card-header border-bottom">
+                {{ form_widget(form.name, {attr: {value: defaultShoppingListName ?? null}}) }}
+            </div>
+            <div class="card-body">
+                {{ form_widget(form.items) }}
+            </div>
+            <div class="card-footer">
+                <a href="{{ path('shopping_list_index') }}"
+                   class="btn btn-outline-secondary">
+                    <i class="fa fa-arrow-left"></i> wróć do listy</a>
+                {% if edit|default(false) %}{{ include('shopping_list/_delete_form.html.twig') }}{% endif %}
+                <button class="btn btn-success">
+                    <i class="fa fa-save"></i> {{ edit|default(false) ? 'Zapisz zmiany' : 'Utwórz listę' }}</button>
+            </div>
+        </div>
+        {{ form_end(form) }}
+    </div>
+</div>

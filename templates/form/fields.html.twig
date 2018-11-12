@@ -4,3 +4,23 @@
         <label for="avatar"></label>
     {% endspaceless %}
 {% endblock %}
+
+{% block row_repeater_widget %}
+    {% spaceless %}
+        <div class="row row-to-repeat">
+            <div class="col-md-12">
+                <div class="input-group mb-1">
+                    <div class="input-group-prepend">
+                        <button type="button" class="btn btn-white row-repeater-trigger">
+                            <i class="fa fa-plus"></i>
+                        </button>
+                        <button type="button" class="btn btn-white row-repeater-remove" disabled>
+                            <i class="fa fa-minus"></i>
+                        </button>
+                    </div>
+                    <input type="text" class="form-control" placeholder="Nowa pozycja" name="{{ name }}"/>
+                </div>
+            </div>
+        </div>
+    {% endspaceless %}
+{% endblock %}

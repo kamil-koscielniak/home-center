@@ -1,0 +1,8 @@
+{% extends '_template/main.html.twig' %}
+
+{% block header %}Zakupy{% endblock %}
+{% block title %}Nowa lista zakupów{% endblock %}
+
+{% block content %}
+    {{ include('shopping_list/_form.html.twig') }}
+{% endblock %}

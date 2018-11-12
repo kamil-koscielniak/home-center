@@ -71,3 +71,14 @@ li.user-menu {
     background-repeat: no-repeat;
     background-position: center;
 }
+
+.card-author-container{
+    position: relative;
+}
+.card-author-container .card-author{
+    -webkit-transform: translateY(50%);
+    transform: translateY(50%);
+    margin-left: 1.5625rem;
+    position: absolute;
+    bottom: 0;
+}

@@ -6,6 +6,13 @@
     </a>
 </li>
 <li class="nav-item">
+    <a class="nav-link {{ app.request.get('_route') == 'shopping_list_index' ? 'active' : '' }}"
+       href="{{ url('shopping_list_index') }}">
+        <i class="material-icons">shopping_basket</i>
+        <span>Zakupy</span>
+    </a>
+</li>
+<li class="nav-item">
     <a class="nav-link {{ app.request.get('_route') == 'user_profile' ? 'active' : '' }}"
        href="{{ url('user_profile') }}">
         <i class="material-icons">person</i>
